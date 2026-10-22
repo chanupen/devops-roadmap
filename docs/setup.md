@@ -1,7 +1,9 @@
 # Lab setup
 
 All labs are designed to run on a single Linux machine. Fedora is the tested
-target; Ubuntu and Debian also work.
+target; Ubuntu and Debian also work. macOS works too: `make bootstrap` installs
+the toolchain with Homebrew, and labs that use systemd on Linux use launchd on
+macOS.
 
 ## Recommended machine
 
@@ -19,6 +21,10 @@ cd devops-roadmap
 make bootstrap
 make pin        # optional: lock "latest" to exact versions, then commit
 ```
+
+On Fedora, if Docker CE is already installed, bootstrap keeps it and skips
+`podman-docker` (the two conflict). On macOS, install [Homebrew](https://brew.sh)
+first.
 
 ## Working from another computer
 

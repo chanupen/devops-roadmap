@@ -41,7 +41,7 @@ systemctl --user start app.service
 
 | Lab | Goal | Runs in CI |
 | --- | --- | --- |
-| [lab-01-broken-service](labs/lab-01-broken-service/) | Fix a systemd service that fails to start | No (needs a user systemd session) |
+| [lab-01-broken-service](labs/lab-01-broken-service/) | Fix a service that fails to start (systemd on Linux, launchd on macOS) | No (needs a user service session) |
 | lab-02-disk-full *(planned)* | Find what is filling the disk, including deleted-but-open files | Planned |
 
 ## Done when

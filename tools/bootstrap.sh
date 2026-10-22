@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs the lab toolchain. Tested target: Fedora; also works on Debian/Ubuntu.
+# Installs the lab toolchain. Tested target: Fedora; also works on Debian/Ubuntu and macOS (Homebrew).
 # System packages come from the distro; CLI tools come from mise using tools/versions.env.
 set -euo pipefail
 
@@ -8,8 +8,20 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "${REPO_ROOT}/tools/versions.env"
 
 install_system_packages() {
-  if command -v dnf >/dev/null 2>&1; then
-    sudo dnf install -y git make curl jq podman podman-docker python3 python3-pip shellcheck yamllint
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    if ! command -v brew >/dev/null 2>&1; then
+      echo "Homebrew is required on macOS. Install it from https://brew.sh and re-run." >&2
+      exit 1
+    fi
+    brew install git make curl jq podman python shellcheck yamllint mise
+  elif command -v dnf >/dev/null 2>&1; then
+    local pkgs=(git make curl jq podman python3 python3-pip shellcheck yamllint)
+    # podman-docker provides a "docker" shim and conflicts with Docker CE.
+    # Only add it when no docker CLI is installed already.
+    if ! command -v docker >/dev/null 2>&1; then
+      pkgs+=(podman-docker)
+    fi
+    sudo dnf install -y "${pkgs[@]}"
   elif command -v apt-get >/dev/null 2>&1; then
     sudo apt-get update
     sudo apt-get install -y git make curl jq podman python3 python3-pip shellcheck yamllint
@@ -43,5 +55,5 @@ install_mise
 install_tools
 
 echo
-echo "Done. Open a new shell (or run: eval \"\$(mise activate bash)\") and check:"
+echo "Done. Open a new shell (or run: eval \"\$(mise activate \$(basename \"\$SHELL\"))\") and check:"
 echo "  kubectl version --client && kind version && helm version && terraform version"
