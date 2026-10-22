@@ -1,0 +1,24 @@
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!example.tfvars
+.terraform.lock.hcl
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+
+# Secrets and local config
+.env
+*.pem
+*.key
+kubeconfig*

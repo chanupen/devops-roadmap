@@ -1,0 +1,22 @@
+name: labs
+
+on:
+  pull_request:
+    paths: ["phases/**/labs/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  changed-labs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: roadmap
+          config: tools/kind/cluster.yaml
+      - name: Run changed labs
+        run: ./tools/ci/run-changed-labs.sh "origin/${{ github.base_ref }}"

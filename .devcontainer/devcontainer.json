@@ -1,0 +1,12 @@
+{
+  "name": "devops-roadmap",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": { "minikube": "none" },
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers/features/go:1": {}
+  },
+  "postCreateCommand": "curl -fsSL https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 -o /tmp/kind || true; sudo install /tmp/kind /usr/local/bin/kind || true; sudo apt-get update && sudo apt-get install -y shellcheck yamllint jq"
+}

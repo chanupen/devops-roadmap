@@ -1,0 +1,50 @@
+name: lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: "**/*.md"
+
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          git ls-files '*.sh' | xargs --no-run-if-empty shellcheck
+
+  yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: yamllint
+        run: |
+          pip install --quiet yamllint
+          yamllint -c .yamllint.yaml .
+
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for Terraform files
+        id: tf
+        run: |
+          if git ls-files '*.tf' | grep -q .; then echo "found=true" >> "$GITHUB_OUTPUT"; fi
+      - uses: hashicorp/setup-terraform@v3
+        if: steps.tf.outputs.found == 'true'
+      - name: terraform fmt
+        if: steps.tf.outputs.found == 'true'
+        run: terraform fmt -check -recursive
