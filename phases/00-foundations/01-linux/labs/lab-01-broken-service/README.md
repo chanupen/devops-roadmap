@@ -17,6 +17,9 @@ which has no systemd, the same service is a launchd user agent,
 
 ## Steps
 
+The easy way, from the repo root: `./roadmap start`, fix it, `./roadmap check`,
+`./roadmap stop`. The steps below do the same by hand.
+
 1. Set up the lab:
 
    ```bash

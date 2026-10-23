@@ -9,6 +9,7 @@ Thanks for helping improve the roadmap.
 - Write for a beginner: short sentences, plain words, explain every term the first time.
 - Every new lab needs `README.md`, `setup.sh`, `check.sh` and `cleanup.sh`.
 - `check.sh` must exit 0 on success and print a clear PASS or FAIL line.
+- New labs show up in `./roadmap` automatically. The topic must be listed in `ROADMAP.md`.
 - If a lab cannot run on a hosted GitHub runner, add a `.ci-skip` file with the reason.
 - Cloud labs give both a LocalStack path and a real AWS path, with a cleanup step for each.
 - Shell scripts start with `set -euo pipefail` and pass `shellcheck`.

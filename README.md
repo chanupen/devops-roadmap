@@ -18,20 +18,33 @@ cd devops-roadmap
 make bootstrap
 ```
 
-**Step 2. Open the roadmap:** [ROADMAP.md](ROADMAP.md). Go from top to bottom.
-
-**Step 3. For each topic, do these four things:**
-
-1. **Read** the topic's notes (5 to 10 minutes).
-2. **Start the lab.** Something is broken on purpose.
-3. **Fix it.** Use the commands in the lab's README.
-4. **Check** your fix. `PASS` means you are done.
+**Step 2. Use one command for everything: `./roadmap`**
 
 ```bash
-make lab   M=00-foundations/01-linux L=lab-01-broken-service   # start
-make check M=00-foundations/01-linux L=lab-01-broken-service   # check
-make clean M=00-foundations/01-linux L=lab-01-broken-service   # clean up
+./roadmap          # see your progress and what to do next
+./roadmap start    # start your next lab (something is broken on purpose)
+./roadmap hint     # read what to do
+./roadmap check    # check your fix; PASS means done
+./roadmap stop     # clean up, then run ./roadmap again
 ```
+
+You don't need to remember lab names or folders. `./roadmap` always tells you
+the next command to run, and it remembers what you have finished.
+
+```text
+DevOps Roadmap
+
+Step 1 · Basics (2 weeks)
+  ✔ Linux                       1. lab-01-broken-service        done
+  · Networking                     lab coming soon
+  ...
+
+Progress: 1 of 1 labs done
+Next: ...
+```
+
+**Step 3. Before each lab, read the topic's notes** (5 to 10 minutes). The
+full list of topics is in [ROADMAP.md](ROADMAP.md).
 
 That's it. Repeat for the next topic.
 
@@ -44,7 +57,7 @@ Skip the topics marked **Later** on your first pass; come back for them when you
 
 - Read the lab's **Hint** section.
 - Look at the [cheatsheets](cheatsheets/).
-- Run `make help` to see all commands.
+- Run `./roadmap help` to see all commands.
 - Lab won't start? See [docs/setup.md](docs/setup.md).
 
 ## What's in this repo

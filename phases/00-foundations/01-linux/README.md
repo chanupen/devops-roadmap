@@ -45,7 +45,7 @@ journalctl       ◄──────────  saves everything the program
 ## Done when
 
 - [ ] You can check if a service is running and read its logs
-- [ ] You fixed lab-01 and `make check` says `PASS`
+- [ ] You fixed lab-01 and `./roadmap check` says `PASS`
 - [ ] You can find which program is using the most CPU and memory (`top`)
 
 ## Want more?

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Entry point. Run ./roadmap help to see all commands.
+exec "$(dirname "$0")/tools/roadmap.sh" "$@"
