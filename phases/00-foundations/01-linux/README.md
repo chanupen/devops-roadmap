@@ -1,51 +1,55 @@
-# Linux and systemd
+# Linux
 
-> Status: in progress (worked example for the module template)
+> Status: in progress
 
-## Why it matters
+## In one sentence
 
-Most production incidents end on a Linux host. Containers, Kubernetes nodes and
-CI runners are all Linux underneath, so reading a host quickly and calmly is the
-base skill for everything else in this roadmap.
+Almost every server, container and cloud machine runs Linux, so knowing how to
+look around a Linux machine and fix it is the first DevOps skill.
 
-## Core concepts
+## Words to know
 
-- **Processes and signals.** Every process has a PID, a parent, an owner and a
-  state. `SIGTERM` asks a process to stop; `SIGKILL` forces it.
-- **systemd.** Services are described by unit files. `systemctl` starts, stops
-  and inspects them; `journalctl` reads their logs.
-- **Filesystems.** Space and inodes can both run out. A deleted file stays on
-  disk while a process still holds it open.
-- **Permissions.** Owner, group and other, plus `sudo` for controlled escalation.
-- **Performance basics.** `top`, `vmstat`, `iostat`, `ss` and `lsof` answer
-  most "why is this host slow" questions.
+- **Process.** A program that is running. Each one has a number (PID).
+- **Service.** A process that runs in the background, like a web server.
+- **systemd.** The part of Linux that starts and stops services.
+- **Log.** The messages a program writes about what it is doing. Errors show up here.
 
-```text
-systemctl --user start app.service
-        │
-        ▼
- systemd reads unit file ──► starts ExecStart ──► process runs
-        │                                            │
-        ▼                                            ▼
- journalctl --user -u app  ◄─────────── stdout / stderr captured
+## The 4 commands to learn first
+
+```bash
+systemctl --user status app.service      # Is it running? Did it crash?
+journalctl --user -u app.service -n 30   # Show the last 30 log lines
+systemctl --user restart app.service     # Restart it
+df -h                                    # How much disk space is left?
 ```
 
-## In a real team
+How they fit together:
 
-- Check the logs before restarting anything; a restart can hide the cause.
-- Prefer `systemctl status` plus `journalctl -u <unit> -n 50` as the first two commands.
-- A host that "has free space" can still fail writes if inodes are exhausted.
-- Write down what you ran during an incident; it becomes the postmortem timeline.
+```text
+systemctl start  ──►  systemd reads the service file  ──►  runs the program
+                                                              │
+journalctl       ◄──────────  saves everything the program prints
+```
 
-## Labs
+## Golden rule
 
-| Lab | Goal | Runs in CI |
-| --- | --- | --- |
-| [lab-01-broken-service](labs/lab-01-broken-service/) | Fix a service that fails to start (systemd on Linux, launchd on macOS) | No (needs a user service session) |
-| lab-02-disk-full *(planned)* | Find what is filling the disk, including deleted-but-open files | Planned |
+**Read the logs before you restart.** A restart can hide the real problem.
+
+## Lab
+
+| Lab | What you do |
+| --- | --- |
+| [lab-01-broken-service](labs/lab-01-broken-service/) | A web server won't start. Read its logs and fix it. |
+| lab-02-disk-full *(coming soon)* | The disk is full. Find out what is filling it. |
 
 ## Done when
 
-- [ ] Explain what happens from power-on to a login prompt
-- [ ] Debug a failing service using only `systemctl` and `journalctl`
-- [ ] Find the top CPU, memory and I/O consumers on a host in under five minutes
+- [ ] You can check if a service is running and read its logs
+- [ ] You fixed lab-01 and `make check` says `PASS`
+- [ ] You can find which program is using the most CPU and memory (`top`)
+
+## Want more?
+
+- [Exercises](exercises.md): extra practice questions
+- [Interview questions](interview-questions.md)
+- [Resources](resources.md): links to go deeper

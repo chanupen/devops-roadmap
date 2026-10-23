@@ -6,6 +6,7 @@ Thanks for helping improve the roadmap.
 
 - Keep everything generic: no employer code, data, internal hostnames or names.
 - Use exact tool names and link to official documentation.
+- Write for a beginner: short sentences, plain words, explain every term the first time.
 - Every new lab needs `README.md`, `setup.sh`, `check.sh` and `cleanup.sh`.
 - `check.sh` must exit 0 on success and print a clear PASS or FAIL line.
 - If a lab cannot run on a hosted GitHub runner, add a `.ci-skip` file with the reason.
@@ -16,7 +17,7 @@ Thanks for helping improve the roadmap.
 
 ```text
 phases/<phase>/<module>/
-├── README.md               # why, concepts, real-team notes, labs, done when
+├── README.md               # one sentence, words to know, first commands, lab, done when
 ├── labs/lab-NN-<name>/     # README.md, setup.sh, check.sh, cleanup.sh
 ├── exercises.md
 ├── interview-questions.md
